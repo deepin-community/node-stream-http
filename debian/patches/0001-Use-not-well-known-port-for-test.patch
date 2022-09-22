@@ -1,0 +1,127 @@
+From 405e05a2937607f977a720517e2acc3caf5ee0ac Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Bastien=20ROUCARI=C3=88S?= <roucaries.bastien@gmail.com>
+Date: Mon, 12 Jun 2017 22:46:45 +0200
+Subject: Use not well known port for test
+
+Avoid problem on buildd
+
+Forwarded: no
+---
+ test/node/http-browserify.js | 32 ++++++++++++++++++--------------
+ 1 file changed, 18 insertions(+), 14 deletions(-)
+
+--- a/test/node/http-browserify.js
++++ b/test/node/http-browserify.js
+@@ -3,7 +3,10 @@
+ var test = require('tape')
+ var url = require('url')
+ 
+-var location = 'http://localhost:8081/foo/123'
++var port1 = 30000+Math.round(Math.random()*30000);
++var port2 = 30000+Math.round(Math.random()*30000);
++
++var location = 'http://localhost:'+port1+'/foo/123'
+ 
+ var noop = function() {}
+ global.location = url.parse(location)
+@@ -36,20 +39,21 @@
+ 	var request = http.get(testUrl, noop)
+ 
+ 	var resolved = url.resolve(location, request._opts.url)
+-	t.equal(resolved, 'http://localhost:8081/api/foo', 'Url should be correct')
++	var url1 = 'http://localhost:'+port1.toString()+'/api/foo';
++	t.equal(resolved, url1, 'Url1 should be correct')
+ 	t.end()
+ 
+ })
+ 
+ test('Test full url object', function(t) {
+ 	var testUrl = {
+-		host: "localhost:8081",
++		host: "localhost:"+port1,
+ 		hostname: "localhost",
+-		href: "http://localhost:8081/api/foo?bar=baz",
++		href: "http://localhost:"+port1.toString()+"/api/foo?bar=baz",
+ 		method: "GET",
+ 		path: "/api/foo?bar=baz",
+ 		pathname: "/api/foo",
+-		port: "8081",
++		port: port1.toString(),
+ 		protocol: "http:",
+ 		query: "bar=baz",
+ 		search: "?bar=baz",
+@@ -59,7 +63,7 @@
+ 	var request = http.get(testUrl, noop)
+ 
+ 	var resolved = url.resolve(location, request._opts.url)
+-	t.equal(resolved, 'http://localhost:8081/api/foo?bar=baz', 'Url should be correct')
++	t.equal(resolved, 'http://localhost:'+port1.toString()+'/api/foo?bar=baz', 'Url should be correct')
+ 	t.end()
+ })
+ 
+@@ -67,21 +71,21 @@
+ 	var params = {
+ 		protocol: "foo:",
+ 		hostname: "localhost",
+-		port: "3000",
++		port: port2.toString(),
+ 		path: "/bar"
+ 	}
+ 
+ 	var request = http.get(params, noop)
+ 
+ 	var resolved = url.resolve(location, request._opts.url)
+-	t.equal(resolved, 'foo://localhost:3000/bar', 'Url should be correct')
++	t.equal(resolved, 'foo://localhost:'+port2.toString()+'/bar', 'Url should be correct')
+ 	t.end()
+ })
+ 
+ test('Test page with \'file:\' protocol', function (t) {
+ 	var params = {
+ 		hostname: 'localhost',
+-		port: 3000,
++		port: port2,
+ 		path: '/bar'
+ 	}
+ 
+@@ -93,7 +97,7 @@
+ 	global.location = normalLocation // Reset the location
+ 
+ 	var resolved = url.resolve(fileLocation, request._opts.url)
+-	t.equal(resolved, 'http://localhost:3000/bar', 'Url should be correct')
++	t.equal(resolved, 'http://localhost:'+port2+'/bar', 'Url should be correct')
+ 	t.end()
+ })
+ 
+@@ -102,7 +106,7 @@
+ 	var request = http.get(testUrl, noop)
+ 
+ 	var resolved = url.resolve(location, request._opts.url)
+-	t.equal(resolved, 'http://localhost:8081/api/foo', 'Url should be correct')
++	t.equal(resolved, 'http://localhost:'+port1+'/api/foo', 'Url should be correct')
+ 	t.end()
+ })
+ 
+@@ -122,11 +126,11 @@
+ })
+ 
+ test('Test ipv6 address', function(t) {
+-	var testUrl = 'http://[::1]:80/foo'
++	var testUrl = 'http://[::1]:'+port1+'/foo'
+ 	var request = http.get(testUrl, noop)
+ 
+ 	var resolved = url.resolve(location, request._opts.url)
+-	t.equal(resolved, 'http://[::1]:80/foo', 'Url should be correct')
++	t.equal(resolved, 'http://[::1]:'+port1+'/foo', 'Url should be correct')
+ 	t.end()
+ })
+ 
+@@ -135,7 +139,7 @@
+ 	var request = http.get(params, noop)
+ 
+ 	var resolved = url.resolve(location, request._opts.url)
+-	t.equal(resolved, 'http://localhost:8081/foo/bar', 'Url should be correct')
++	t.equal(resolved, 'http://localhost:'+port1+'/foo/bar', 'Url should be correct')
+ 	t.end()
+ })
+ 

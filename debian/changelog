@@ -1,0 +1,64 @@
+node-stream-http (3.2.0+dfsg-1) unstable; urgency=medium
+
+  * Team upload
+
+  [ Debian Janitor ]
+  * Remove constraints unnecessary since buster:
+    + Build-Depends: Drop versioned constraint on node-tap and nodejs.
+    + node-stream-http: Drop versioned constraint on nodejs in Depends.
+
+  [ Yadd ]
+  * Update standards version to 4.6.0, no changes needed.
+  * Fix filenamemangle
+  * New upstream version 3.2.0+dfsg
+  * Refresh patch
+
+ -- Yadd <yadd@debian.org>  Fri, 05 Nov 2021 14:06:31 +0100
+
+node-stream-http (3.1.1+dfsg-1) unstable; urgency=medium
+
+  * Team upload
+
+  [ Debian Janitor ]
+  * debian/copyright: use spaces rather than tabs to start continuation
+    lines.
+  * Set upstream metadata fields: Bug-Database, Bug-Submit, Repository,
+    Repository-Browse.
+
+  [ Xavier Guimard ]
+  * Bump debhelper compatibility level to 13
+  * Declare compliance with policy 4.5.1
+  * Add debian/gbp.conf
+  * Use dh-sequence-nodejs
+  * New upstream version 3.1.1+dfsg
+  * Drop unneeded version constraints from (build) dependencies
+
+ -- Xavier Guimard <yadd@debian.org>  Tue, 01 Dec 2020 13:29:53 +0100
+
+node-stream-http (3.1.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream version
+  * Use pkg-js-tools
+
+ -- Bastien Roucariès <rouca@debian.org>  Tue, 03 Mar 2020 18:25:32 +0100
+
+node-stream-http (2.8.3+dfsg-1) unstable; urgency=medium
+
+  * New upstream version
+  * Bump policy and compat
+  * Move to salsa
+
+ -- Bastien Roucariès <rouca@debian.org>  Thu, 07 Jun 2018 16:06:30 +0200
+
+node-stream-http (2.7.2+dfsg-1) unstable; urgency=medium
+
+  * New upstream version. Fixes problem with safari and ios
+  * Bump policy, no changes
+
+ -- Bastien Roucariès <rouca@debian.org>  Sun, 13 Aug 2017 15:44:29 +0200
+
+node-stream-http (2.7.1+dfsg-1) unstable; urgency=low
+
+  * Initial release (Closes: #864653)
+
+ -- Bastien Roucariès <rouca@debian.org>  Mon, 12 Jun 2017 22:21:23 +0200
